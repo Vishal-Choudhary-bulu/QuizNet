@@ -1,0 +1,12 @@
+.homepage-main{
+    width: 100vw;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(255, 230, 0, 0.5);
+}
+
+.homepage-main h1{
+    margin: 0;
+    color: rgba(0, 0, 0, 1);
+}

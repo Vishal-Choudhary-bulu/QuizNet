@@ -1,0 +1,9 @@
+.profilepage-main{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(75, 255, 186, 0.349);
+}
+
+.profilepage-main h1{
+    color: black;
+}

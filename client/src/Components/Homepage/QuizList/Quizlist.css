@@ -1,0 +1,11 @@
+.quizlist-main{
+    display: flex;
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10vh 5vw 0 5vw;
+}
