@@ -1,75 +1,97 @@
-.creationpage-main{
-    background-color: #ffffff8c;
-    width: 100vw;
-    height: 100vh;
+.creationpage-main {
+  background-color: #ffffff8c;
+  width: 100vw;
+  height: 100vh;
 }
 
-.creationpage-form{
-    height: 80%;
-    width: 100%;
-    display: flex;
-    flex-flow: column;
-    align-items: center;
-    justify-content: space-evenly;
+.creationpage-form {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-evenly;
 }
 
-.creationpage-form h1{
-    height: 20%;
-    font-family: monospace;
-    font-weight: bold;
+.creationpage-form h1 {
+  height: 20%;
+  font-family: monospace;
+  font-weight: bold;
+  color: rgb(0, 122, 170);
 }
 
-.creationpage-form-area{
-    height: 80%;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.062);
-    display: flex;
-    flex-flow: column;
-    text-align: center;
+.creationpage-form-area {
+  height: 80%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.062);
+  display: flex;
+  flex-flow: column;
+  text-align: center;
 }
 
-.creationpage-form-input{
-    border : none;
-    outline: none;
-    font-size: 3rem;
-    padding:10px;
-    margin: 10px;
-    width: 40%;
-    border-bottom: 2px solid black;
+.creationpage-form-input {
+  border: none;
+  outline: none;
+  font-size: 3rem;
+  padding: 10px;
+  margin: 10px;
+  width: 40%;
+  border-bottom: 2px solid black;
 }
 
-.creationpage-form-input:hover{
-    border-bottom-color: rgb(172, 172, 172) ;
+.creationpage-form-input:hover {
+  border-bottom-color: rgb(172, 172, 172);
 }
 
-.creationpage-form-input:focus{
-    border-bottom-color: rgb(0, 170, 57);
+.creationpage-form-input:focus {
+  border-bottom-color: rgb(0, 122, 170);
 }
 
-
-.input-ques{
-    width: 85%;
+.input-ques {
+  width: 85%;
 }
 
-.creationpage-form-area-label{
-    font-size: 3em;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: bolder;
-    padding: 10px 50px;
-    display: flex;
-    flex-flow: row;
-    align-items: center;
-    justify-content: space-between;
+.creationpage-form-area-label {
+  font-size: 3em;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bolder;
+  padding: 10px 50px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.creation-form-option-area{
-    display: flex;
-    flex-flow: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
+.creationpage-form-option-area {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
 }
 
-.form-option{
-    font-size: 2em;
+.creationpage-form-choice {
+  width: 40%;
+}
+
+.form-option {
+  width: 60%;
+  font-size: 2em;
+}
+
+.creationpage-form-submit-btn {
+  outline: none;
+  border: none;
+  width: 300px;
+  height: 100px;
+  border-radius: 20px;
+  font-size: 4em;
+  font-family: monospace;
+  /* font-weight: bold; */
+  background-color: rgb(0, 122, 170);
+  color: white;
+}
+
+.creationpage-form-btn-container {
+  margin: 100px;
 }
