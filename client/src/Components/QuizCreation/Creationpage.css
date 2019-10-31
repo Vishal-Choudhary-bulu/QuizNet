@@ -1,9 +1,75 @@
 .creationpage-main{
-    background-color: #4b274b8c;
+    background-color: #ffffff8c;
     width: 100vw;
     height: 100vh;
 }
 
-.creationpage-main h1{
-    color: rgb(0, 0, 0);
+.creationpage-form{
+    height: 80%;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.creationpage-form h1{
+    height: 20%;
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.creationpage-form-area{
+    height: 80%;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.062);
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+}
+
+.creationpage-form-input{
+    border : none;
+    outline: none;
+    font-size: 3rem;
+    padding:10px;
+    margin: 10px;
+    width: 40%;
+    border-bottom: 2px solid black;
+}
+
+.creationpage-form-input:hover{
+    border-bottom-color: rgb(172, 172, 172) ;
+}
+
+.creationpage-form-input:focus{
+    border-bottom-color: rgb(0, 170, 57);
+}
+
+
+.input-ques{
+    width: 85%;
+}
+
+.creationpage-form-area-label{
+    font-size: 3em;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    padding: 10px 50px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.creation-form-option-area{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.form-option{
+    font-size: 2em;
 }
