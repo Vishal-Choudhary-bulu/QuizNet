@@ -13,17 +13,29 @@ code {
     monospace;
 }
 
-*{
-  margin : 0;
+* {
+  margin: 0;
   padding: 0;
+  outline: none;
 }
 
-h1{
+h1 {
   font-size: 5em;
 }
 
-.flex-centered-container{
+.flex-centered-container {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.react-link {
+  color: white;
+  text-decoration: none;
+  border: 0px;
+  outline: none;
+}
+
+button:disabled {
+  color: rgb(7, 7, 7);
 }
