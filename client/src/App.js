@@ -15,7 +15,7 @@ export default class App extends Component {
     };
 
     this.componentDidMount = () => {
-      const LoggedIn = true;
+      const LoggedIn = false;
       this.setState({
         IsloggedIn: LoggedIn
       });
