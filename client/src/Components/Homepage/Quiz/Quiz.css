@@ -35,7 +35,7 @@
 .option-btn {
   border: 3px solid rgb(56, 56, 56);
   outline: none;
-  font-size: 1.5em;
+  font-size: 1.4em;
   font-family: "Courier New", Courier, monospace;
   font-weight: 700;
   width: 70%;
@@ -72,7 +72,6 @@
   width: 150px;
   height: 60px;
   border-radius: 20px;
-  font-size: 1.5em;
 }
 
 .quiz-author {

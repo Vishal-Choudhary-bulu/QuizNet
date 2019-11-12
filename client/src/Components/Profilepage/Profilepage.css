@@ -1,9 +1,46 @@
-.profilepage-main{
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(75, 255, 186, 0.349);
+.profilepage-main {
+  width: 100vw;
+  height: auto;
+  min-height: 100vh;
+  background-color: rgba(253, 255, 138, 0.178);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
-.profilepage-main h1{
-    color: black;
+.profilepage-main h1 {
+  color: black;
+}
+
+.profile-main {
+  width: 90vw;
+  margin-top: 20vh;
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.profile-user {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  font-family: Courier;
+  font-size: 4em;
+  font-weight: bolder;
+}
+
+.profile-name {
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.profile-level {
+  color: red;
+  font-size: 3rem;
 }

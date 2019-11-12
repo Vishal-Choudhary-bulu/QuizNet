@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import "./Creationpage.css";
+import axios from "axios";
+var uniqid = require("uniqid");
 
 export default class Creationpage extends Component {
   constructor(props) {
@@ -49,17 +51,39 @@ export default class Creationpage extends Component {
       if (this.state.correct === "") {
         alert("please select the correct answer for your quiz!");
       } else {
-        var newQuiz = {};
-        newQuiz.id = 1;
-        newQuiz.ques = this.state.ques;
-        newQuiz.option1 = this.state.option1;
-        newQuiz.option2 = this.state.option2;
-        newQuiz.option3 = this.state.option3;
-        newQuiz.option4 = this.state.option4;
-        newQuiz.correct = this.state.correct;
-        newQuiz.author = "Vishal";
+        const newQuiz = {
+          id: uniqid(),
+          ques: this.state.ques,
+          option1: this.state.option1,
+          option2: this.state.option2,
+          option3: this.state.option3,
+          option4: this.state.option4,
+          correct: this.state.correct,
+          author: "Vishal"
+        };
 
+        if (this.state.option3 === "") {
+          newQuiz.option3 = null;
+        }
+        if (this.state.option4 === "") {
+          newQuiz.option4 = null;
+        }
+        axios
+          .post("http://localhost:5000/quizes/add", newQuiz)
+          .then(res => console.log(res.data))
+          .catch(err => console.log(err));
         console.log(newQuiz);
+
+        this.setState({
+          ques: "",
+          option1: "",
+          option2: "",
+          option3: "",
+          option4: "",
+          submitted: false,
+          correct: "",
+          clickedNum: 0
+        });
       }
     };
   }
@@ -88,6 +112,7 @@ export default class Creationpage extends Component {
                   type="text"
                   required
                   onChange={this.handleChange}
+                  value={this.state.ques}
                   className="creationpage-form-input input-ques"
                   rows="3"
                   placeholder="Enter the question here..."
@@ -105,6 +130,7 @@ export default class Creationpage extends Component {
                     type="text"
                     required
                     onChange={this.handleChange}
+                    value={this.state.option1}
                     className="creationpage-form-input form-option"
                     placeholder="choice 1"
                     onFocus={e => (e.target.placeholder = "")}
@@ -118,6 +144,7 @@ export default class Creationpage extends Component {
                     type="text"
                     required
                     onChange={this.handleChange}
+                    value={this.state.option2}
                     className="creationpage-form-input form-option"
                     placeholder="choice 2"
                     onFocus={e => (e.target.placeholder = "")}
@@ -130,6 +157,7 @@ export default class Creationpage extends Component {
                     name="option3"
                     type="text"
                     onChange={this.handleChange}
+                    value={this.state.option3}
                     className="creationpage-form-input form-option"
                     placeholder="choice 3"
                     onFocus={e => (e.target.placeholder = "")}
@@ -143,6 +171,7 @@ export default class Creationpage extends Component {
                     type="text"
                     required={false}
                     onChange={this.handleChange}
+                    value={this.state.option4}
                     className="creationpage-form-input form-option"
                     placeholder="choice 4"
                     onFocus={e => (e.target.placeholder = "")}

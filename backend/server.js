@@ -12,16 +12,22 @@ app.use(cors());
 app.use(express.json());
 
 const uri = process.env.ATLAS_URI;
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-});
+mongoose
+  .connect(uri, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+  })
+  .catch(err => console.log(err));
 
 const connection = mongoose.connection;
 connection.once("open", () => {
   console.log("connection established with the database");
 });
+
+const quizRouter = require("./Routes/Quiz.route");
+
+app.use("/quizes", quizRouter);
 
 app.listen(PORT, () => {
   console.log(`server running at port ${PORT}`);
