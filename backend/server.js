@@ -26,8 +26,9 @@ connection.once("open", () => {
 });
 
 const quizRouter = require("./Routes/Quiz.route");
-
+const learnerRouter = require("./Routes/Learner.route");
 app.use("/quizes", quizRouter);
+app.use("/learners", learnerRouter);
 
 app.listen(PORT, () => {
   console.log(`server running at port ${PORT}`);

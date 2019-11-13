@@ -8,19 +8,26 @@ export default class Quizlist extends Component {
     super(props);
 
     this.state = {
+      ismounted: false,
       quizes: [],
       user: ""
     };
 
     this.componentDidMount = e => {
+      this.setState({
+        ismounted: true
+      });
+
       axios
         .get("http://localhost:5000/quizes/")
         .then(res => {
-          if (res.data.length > 0) {
-            this.setState({
-              quizes: res.data
-            });
-            console.log(res);
+          if (this.state.ismounted) {
+            if (res.data.length > 0) {
+              this.setState({
+                quizes: res.data
+              });
+              console.log(res);
+            }
           }
         })
         .catch(err => console.log(err));

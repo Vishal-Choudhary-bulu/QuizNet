@@ -4,21 +4,25 @@ import Navbar from "./Components/Navbar/Navbar";
 import Creationpage from "./Components/QuizCreation/Creationpage";
 import Homepage from "./Components/Homepage/main/Homepage";
 import Profilepage from "./Components/Profilepage/Profilepage";
-import login from "./Components/Auth/login";
+import Login from "./Components/Auth/login";
+import Cookies from "universal-cookie";
 
+const cookies = new Cookies();
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      IsloggedIn: false
+      IsloggedIn: cookies.get("loggedIn")
     };
 
     this.componentDidMount = () => {
-      const LoggedIn = false;
-      this.setState({
-        IsloggedIn: LoggedIn
-      });
+      console.log(this.state.IsloggedIn);
+    };
+
+    this.loginHandler = () => {
+      console.log("yah");
+      this.setState({ IsloggedIn: cookies.get("loggedIn") });
     };
   }
 
@@ -26,22 +30,30 @@ export default class App extends Component {
     return (
       <Router>
         <div className="App">
-          {this.state.IsloggedIn ? <Navbar /> : ""}
-          <Route exact path="/login" component={login}></Route>
+          {this.state.IsloggedIn === "true" ? (
+            <Navbar />
+          ) : (
+            <Login handleLogin={this.loginHandler} />
+          )}
+          <Route exact path="/login" component={Login}></Route>
           <Route
             exact
             path="/"
-            component={this.state.IsloggedIn ? Homepage : login}
+            component={
+              this.state.IsloggedIn === "true"
+                ? Homepage
+                : () => <Login handleLogin={this.loginHandler} />
+            }
           ></Route>
           <Route
             exact
             path="/create"
-            component={this.state.IsloggedIn ? Creationpage : login}
+            component={this.state.IsloggedIn === "true" ? Creationpage : Login}
           ></Route>
           <Route
             exact
             path="/profile"
-            component={this.state.IsloggedIn ? Profilepage : login}
+            component={this.state.IsloggedIn === "true" ? Profilepage : Login}
           ></Route>
         </div>
       </Router>
