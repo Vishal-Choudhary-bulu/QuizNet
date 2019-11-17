@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./Quiz.css";
+import {connect } from 'react-redux'
 
-export default class Quiz extends Component {
+ class Quiz extends Component {
   constructor(props) {
     super(props);
 
@@ -50,9 +51,26 @@ export default class Quiz extends Component {
       this.setState({
         IsAnswered: true
       });
+      const newQuiz  = {
+      id: this.state.id,
+      ques: this.state.ques,
+      option1: this.state.option1,
+      option2: this.state.option2,
+      option3: this.state.option3,
+      option4: this.state.option4,
+      correct: this.state.correct,
+      author: this.state.author,
+      userAns: this.state.userAns,
+      IsAnswered: true
+      
+      }
+        
+        this.props.AddQuizToSolved(newQuiz);
+
       if (this.state.userAns === this.state.correct) {
-        console.log("ok");
+        
       } else {
+
       }
     };
   }
@@ -204,3 +222,20 @@ export default class Quiz extends Component {
     );
   }
 }
+
+
+
+const mapDispatchToProps = dispatch => {
+  return {
+    AddQuizToSolved : quiz => {
+      dispatch({
+      type: "ADD_TO_SOLVED",
+      newQuiz: quiz
+      })
+    }
+  }
+}
+
+
+
+export default connect(null, mapDispatchToProps)(Quiz);

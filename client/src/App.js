@@ -4,24 +4,42 @@ import Navbar from "./Components/Navbar/Navbar";
 import Creationpage from "./Components/QuizCreation/Creationpage";
 import Homepage from "./Components/Homepage/main/Homepage";
 import Profilepage from "./Components/Profilepage/Profilepage";
-import Login from "./Components/Auth/login";
 import Cookies from "universal-cookie";
+import Login from "./Components/Auth/Login";
+import axios from "axios";
+import {connect} from 'react-redux'
 
 const cookies = new Cookies();
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      IsloggedIn: cookies.get("loggedIn")
+      IsloggedIn: false
     };
 
     this.componentDidMount = () => {
-      console.log(this.state.IsloggedIn);
+      const usermail = cookies.get("email");
+      const userpass = cookies.get("password");
+
+      
+      axios
+        .post("http://localhost:5000/learners/login", {
+          email: usermail,
+          password: userpass
+        })
+        .then(res => {
+          if (res.data !== null) {  
+            cookies.set("loggedIn", "true", { path: "/" });
+            this.props.setUser(res.data);
+            this.setState({ IsloggedIn: cookies.get("loggedIn") });
+            this.setState({ loggedIn: true });
+          }
+        })
+        .catch(err => console.log("login error" + err));
     };
 
     this.loginHandler = () => {
-      console.log("yah");
       this.setState({ IsloggedIn: cookies.get("loggedIn") });
     };
   }
@@ -41,7 +59,7 @@ export default class App extends Component {
             path="/"
             component={
               this.state.IsloggedIn === "true"
-                ? Homepage
+                ? () => <Homepage quizProp={this.state.quizes} />
                 : () => <Login handleLogin={this.loginHandler} />
             }
           ></Route>
@@ -60,3 +78,19 @@ export default class App extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: user => {
+      dispatch({
+        type: "ADD_USER",
+        newUser: user
+      });
+    }
+  };
+};
+
+
+
+
+export default connect(null, mapDispatchToProps)(App);

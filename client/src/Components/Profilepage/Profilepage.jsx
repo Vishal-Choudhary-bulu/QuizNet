@@ -1,30 +1,39 @@
 import React, { Component } from "react";
 import "./Profilepage.css";
+import { connect } from "react-redux";
+import Quiz from "../Homepage/Quiz/Quiz";
 
-export default class Profilepage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      user_id: "",
-      username: "Vishal",
-      solved: [],
-      posted: [],
-      learnerLevel: "Rookie"
-    };
-  }
+class Profilepage extends Component {
   render() {
     return (
       <div className="profilepage-main">
         <div className="profile-main">
           <div className="profile-user">
-            <div className="profile-name">{this.state.username}</div>
-            <div className="profile-level">{this.state.learnerLevel}</div>
+            <div className="profile-name">{this.props.Learner.username}</div>
+            <div className="profile-level">
+              {this.props.Learner.learnerLevel}
+            </div>
           </div>
-          <div className="profile-solved"></div>
-          <div className="profile-posted"></div>
+          <div className="profile-solved">
+            {this.props.Learner.solved.map((e, key) => (
+              <Quiz quiz={e} key={key} />
+            ))}
+          </div>
+          <div className="profile-posted">
+            {this.props.Learner.posted.map((e, key) => (
+              <Quiz quiz={e} key={key} />
+            ))}
+          </div>
         </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    Learner: state.User
+  };
+};
+
+export default connect(mapStateToProps)(Profilepage);

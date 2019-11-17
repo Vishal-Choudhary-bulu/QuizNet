@@ -31,10 +31,6 @@ export default class Quizlist extends Component {
           }
         })
         .catch(err => console.log(err));
-
-      // this.setState({
-      //   quizes: data
-      // });
     };
   }
 

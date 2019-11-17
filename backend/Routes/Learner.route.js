@@ -8,9 +8,9 @@ router.route("/login").post((req, res) => {
   Learner.findOne({ email: mail })
     .then(user => {
       if (password === user.password) {
-        res.json(true);
+        res.json(user);
       } else {
-        res.json(false);
+        res.json(null);
       }
     })
     .catch(err => res.status(404).json(false));
