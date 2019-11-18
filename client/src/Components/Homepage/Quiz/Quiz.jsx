@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./Quiz.css";
-import {connect } from 'react-redux'
+import { connect } from "react-redux";
+import axios from "axios";
 
- class Quiz extends Component {
+class Quiz extends Component {
   constructor(props) {
     super(props);
 
@@ -18,7 +19,8 @@ import {connect } from 'react-redux'
       userAns: "",
       clickedNum: 0,
       IsSelected: "",
-      IsAnswered: false
+      IsAnswered: false,
+      AddedToSolved: false
     };
 
     this.componentDidMount = e => {
@@ -51,29 +53,43 @@ import {connect } from 'react-redux'
       this.setState({
         IsAnswered: true
       });
-      const newQuiz  = {
-      id: this.state.id,
-      ques: this.state.ques,
-      option1: this.state.option1,
-      option2: this.state.option2,
-      option3: this.state.option3,
-      option4: this.state.option4,
-      correct: this.state.correct,
-      author: this.state.author,
-      userAns: this.state.userAns,
-      IsAnswered: true
-      
-      }
-        
-        this.props.AddQuizToSolved(newQuiz);
+
+      const newQuiz = {
+        id: this.state.id,
+        ques: this.state.ques,
+        option1: this.state.option1,
+        option2: this.state.option2,
+        option3: this.state.option3,
+        option4: this.state.option4,
+        correct: this.state.correct,
+        author: this.state.author,
+        userAns: this.state.userAns,
+        IsAnswered: true
+      };
+
+      const newLearner = this.props.Learner;
+      newLearner.solved = [...this.props.Learner.solved, newQuiz];
+
+      axios
+        .post("http://localhost:5000/learners/update", { Learner: newLearner })
+        .then(res => {
+          this.props.UpdateUser(newLearner);
+          console.log(this.props.Learner);
+        })
+        .catch(err => console.log(err));
+
+      setTimeout(() => {
+        this.setState({
+          AddedToSolved: true
+        });
+      }, 10000);
 
       if (this.state.userAns === this.state.correct) {
-        
       } else {
-
       }
     };
   }
+
   render() {
     const clicked = {
       backgroundColor: "rgb(100, 100, 200)"
@@ -99,7 +115,9 @@ import {connect } from 'react-redux'
       <div
         className="quiz-main"
         style={
-          this.state.IsAnswered
+          this.state.AddedToSolved
+            ? hidden
+            : this.state.IsAnswered
             ? this.state.userAns === this.state.correct
               ? correctQuiz
               : wrongQuiz
@@ -223,19 +241,22 @@ import {connect } from 'react-redux'
   }
 }
 
-
+const mapStateTOProps = state => {
+  return {
+    Learner: state.User,
+    solved: state.solved
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    AddQuizToSolved : quiz => {
+    UpdateUser: user => {
       dispatch({
-      type: "ADD_TO_SOLVED",
-      newQuiz: quiz
-      })
+        type: "UPDATE_USER",
+        newUser: user
+      });
     }
-  }
-}
+  };
+};
 
-
-
-export default connect(null, mapDispatchToProps)(Quiz);
+export default connect(mapStateTOProps, mapDispatchToProps)(Quiz);

@@ -41,4 +41,11 @@ router.route("/signup").post((req, res) => {
     .catch(err => console.log("signup error " + err));
 });
 
+router.route("/update").post((req, res) => {
+  const thisLearnerId = req.body.Learner.learner_id;
+  Learner.updateOne({ learner_id: thisLearnerId }, req.body.Learner)
+    .then(res.json("learner updated"))
+    .catch(err => console.log(err));
+});
+
 module.exports = router;

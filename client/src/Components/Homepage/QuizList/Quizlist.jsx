@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import "./Quizlist.css";
 import Quiz from "../Quiz/Quiz";
 import axios from "axios";
+import { connect } from "react-redux";
 
-export default class Quizlist extends Component {
+class Quizlist extends Component {
   constructor(props) {
     super(props);
 
@@ -14,23 +15,30 @@ export default class Quizlist extends Component {
     };
 
     this.componentDidMount = e => {
-      this.setState({
-        ismounted: true
-      });
+      this.setState({ ismounted: true });
+
+      const solved = this.props.Learner.solved;
 
       axios
-        .get("http://localhost:5000/quizes/")
+        .post("http://localhost:5000/quizes/unsolved", {
+          solved: solved
+        })
         .then(res => {
-          if (this.state.ismounted) {
-            if (res.data.length > 0) {
+          if (res.data.length > 0) {
+            if (this.state.ismounted) {
               this.setState({
                 quizes: res.data
               });
-              console.log(res);
             }
           }
         })
         .catch(err => console.log(err));
+    };
+
+    this.componentWillUnmount = () => {
+      this.setState({
+        ismounted: false
+      });
     };
   }
 
@@ -44,3 +52,11 @@ export default class Quizlist extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    Learner: state.User
+  };
+};
+
+export default connect(mapStateToProps, null)(Quizlist);

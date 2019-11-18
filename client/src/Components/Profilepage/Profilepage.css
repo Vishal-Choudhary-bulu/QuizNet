@@ -20,7 +20,7 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 }
 
 .profile-user {
@@ -43,4 +43,23 @@
 .profile-level {
   color: red;
   font-size: 3rem;
+}
+
+.profile-solved {
+  width: 100vw;
+  padding: 20vh;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: space-evenly;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.profile-solved-title {
+  width: 100vw;
+  text-align: center;
+  font-size: 4em;
+  font-family: courier;
+  font-weight: bolder;
 }

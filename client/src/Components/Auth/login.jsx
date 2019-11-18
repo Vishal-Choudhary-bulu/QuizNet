@@ -10,6 +10,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
 
+    this._ismounted = false;
+
     this.state = {
       username: "",
       email: "",
@@ -18,63 +20,79 @@ class Login extends Component {
       loggedIn: false
     };
     this.handleChange = e => {
-      this.setState({
-        [e.target.name]: e.target.value
-      });
+      if (this._ismounted) {
+        this.setState({
+          [e.target.name]: e.target.value
+        });
+      }
+    };
+
+    this.componentDidMount = () => {
+      this._ismounted = true;
     };
 
     this.handleToggle = e => {
-      if (this.state.Signing === false) {
-        this.setState(() => ({
-          Signing: true
-        }));
-      } else {
-        this.setState(() => ({
-          Signing: false
-        }));
+      if (this._ismounted) {
+        if (this.state.Signing === false) {
+          this.setState(() => ({
+            Signing: true
+          }));
+        } else {
+          this.setState(() => ({
+            Signing: false
+          }));
+        }
       }
     };
 
     this.handleLogin = e => {
-      const email = this.state.email;
-      const password = this.state.password;
-      axios
-        .post("http://localhost:5000/learners/login", {
-          email: email,
-          password: password
-        })
-        .then(res => {
-          if (res.data !== null) {
-            cookies.set("loggedIn", "true", { path: "/" });
-            cookies.set("email", res.data.email, { path: "/" });
-            cookies.set("password", res.data.password, {
-              path: "/",
-            });
-            this.props.setUser(res.data);
-            this.props.handleLogin();
-            this.setState({ loggedIn: true });
-          }
-        })
-        .catch(err => console.log("login error" + err));
+      if (this._ismounted) {
+        const email = this.state.email;
+        const password = this.state.password;
+        axios
+          .post("http://localhost:5000/learners/login", {
+            email: email,
+            password: password
+          })
+          .then(res => {
+            if (res.data !== null) {
+              cookies.set("loggedIn", "true", { path: "/" });
+              cookies.set("email", res.data.email, { path: "/" });
+              cookies.set("password", res.data.password, {
+                path: "/"
+              });
+              this.props.setUser(res.data);
+              this.props.handleLogin();
+              this.setState({ loggedIn: true });
+            }
+          })
+          .catch(err => console.log("login error" + err));
+      }
     };
 
     this.handleSignup = e => {
-      const username = this.state.username;
-      const email = this.state.email;
-      const password = this.state.password;
+      if (this._ismounted) {
+        const username = this.state.username;
+        const email = this.state.email;
+        const password = this.state.password;
 
-      axios
-        .post("http://localhost:5000/learners/signup", {
-          learner_id: uniqid(),
-          username,
-          email,
-          password,
-          learnerLevel: "Rookie"
-        })
-        .then(res => {
-          this.handleLogin();
-        })
-        .catch(err => console.log(err));
+        axios
+          .post("http://localhost:5000/learners/signup", {
+            learner_id: uniqid(),
+            username,
+            email,
+            password,
+            learnerLevel: "Rookie"
+          })
+          .then(res => {
+            this.handleLogin();
+          })
+          .catch(err => console.log(err));
+      }
+    };
+
+    this.componentWillUnmount = () => {
+      this._ismounted = false;
     };
   }
 
@@ -175,7 +193,7 @@ const mapDispatchToProps = dispatch => {
   return {
     setUser: user => {
       dispatch({
-        type: "ADD_USER",
+        type: "UPDATE_USER",
         newUser: user
       });
     }

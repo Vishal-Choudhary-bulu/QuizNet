@@ -88,3 +88,7 @@
 .login-toggle-btn:active {
   filter: grayscale(150%);
 }
+
+.sign {
+  background-color: #123123;
+}

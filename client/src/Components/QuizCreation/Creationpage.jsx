@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import "./Creationpage.css";
 import axios from "axios";
+import { connect } from "react-redux";
 var uniqid = require("uniqid");
 
-export default class Creationpage extends Component {
+class Creationpage extends Component {
   constructor(props) {
     super(props);
 
@@ -59,7 +60,7 @@ export default class Creationpage extends Component {
           option3: this.state.option3,
           option4: this.state.option4,
           correct: this.state.correct,
-          author: "Vishal"
+          author: this.props.Learner.username
         };
 
         if (this.state.option3 === "") {
@@ -68,11 +69,22 @@ export default class Creationpage extends Component {
         if (this.state.option4 === "") {
           newQuiz.option4 = null;
         }
+
         axios
-          .post("http://localhost:5000/quizes/add", newQuiz)
-          .then(res => console.log(res.data))
+          .post("http://localhost:5000/quizes/add", { quiz: newQuiz })
+          .then(console.log("new quiz created"))
           .catch(err => console.log(err));
-        console.log(newQuiz);
+
+        const newLearner = this.props.Learner;
+        newLearner.posted = [...this.props.Learner.posted, newQuiz];
+        axios
+          .post("http://localhost:5000/learners/update", {
+            Learner: newLearner
+          })
+          .then(res => {
+            this.props.UpdateUser(newLearner);
+          })
+          .catch(err => console.log(err));
 
         this.setState({
           ques: "",
@@ -266,3 +278,23 @@ export default class Creationpage extends Component {
     }
   }
 }
+
+const mapStateTOProps = state => {
+  return {
+    Learner: state.User,
+    solved: state.solved
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    UpdateUser: user => {
+      dispatch({
+        type: "UPDATE_USER",
+        newUser: user
+      });
+    }
+  };
+};
+
+export default connect(mapStateTOProps, mapDispatchToProps)(Creationpage);

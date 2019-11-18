@@ -7,7 +7,7 @@ import Profilepage from "./Components/Profilepage/Profilepage";
 import Cookies from "universal-cookie";
 import Login from "./Components/Auth/Login";
 import axios from "axios";
-import {connect} from 'react-redux'
+import { connect } from "react-redux";
 
 const cookies = new Cookies();
 class App extends Component {
@@ -22,21 +22,21 @@ class App extends Component {
       const usermail = cookies.get("email");
       const userpass = cookies.get("password");
 
-      
-      axios
-        .post("http://localhost:5000/learners/login", {
-          email: usermail,
-          password: userpass
-        })
-        .then(res => {
-          if (res.data !== null) {  
-            cookies.set("loggedIn", "true", { path: "/" });
-            this.props.setUser(res.data);
-            this.setState({ IsloggedIn: cookies.get("loggedIn") });
-            this.setState({ loggedIn: true });
-          }
-        })
-        .catch(err => console.log("login error" + err));
+      if (usermail !== "" && usermail !== null) {
+        axios
+          .post("http://localhost:5000/learners/login", {
+            email: usermail,
+            password: userpass
+          })
+          .then(res => {
+            if (res.data !== null) {
+              cookies.set("loggedIn", "true", { path: "/" });
+              this.props.setUser(res.data);
+              this.setState({ IsloggedIn: cookies.get("loggedIn") });
+            }
+          })
+          .catch(err => console.log("login error" + err));
+      }
     };
 
     this.loginHandler = () => {
@@ -48,11 +48,7 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          {this.state.IsloggedIn === "true" ? (
-            <Navbar />
-          ) : (
-            <Login handleLogin={this.loginHandler} />
-          )}
+          {this.state.IsloggedIn === "true" ? <Navbar /> : ""}
           <Route exact path="/login" component={Login}></Route>
           <Route
             exact
@@ -83,14 +79,11 @@ const mapDispatchToProps = dispatch => {
   return {
     setUser: user => {
       dispatch({
-        type: "ADD_USER",
+        type: "UPDATE_USER",
         newUser: user
       });
     }
   };
 };
-
-
-
 
 export default connect(null, mapDispatchToProps)(App);

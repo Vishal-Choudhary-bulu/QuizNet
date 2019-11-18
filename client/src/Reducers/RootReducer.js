@@ -1,31 +1,21 @@
 const initState = {
   User: {},
-  Quizes: [],
-  solved : [],
-  posted: []
+  Quizes: {}
 };
 
 const RootReducer = (state = initState, action) => {
-
   switch (action.type) {
-    case "ADD_USER":
-      const newUser = action.newUser;
+    case "UPDATE_USER":
+      console.log(action);
+      const updatedUser = action.newUser;
       return {
         ...state,
-        solved : newUser
+        User: updatedUser
       };
-    
-    case "ADD_TO_SOLVED":
-      const newQuiz = action.newQuiz;
-      return {
-        ...state,
-        User: newQuiz
-      };
-  
+
     default:
       break;
   }
-  
 };
 
 export default RootReducer;
