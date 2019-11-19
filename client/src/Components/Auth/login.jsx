@@ -19,6 +19,7 @@ class Login extends Component {
       Signing: false,
       loggedIn: false
     };
+
     this.handleChange = e => {
       if (this._ismounted) {
         this.setState({
